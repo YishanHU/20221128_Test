@@ -1,29 +1,55 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Search from '../views/Search/Search.vue'
+import Home from "@/views/Home/Home";
+import Order from "@/views/Order/Order";
+import Profile from "@/views/Profile/Profile";
+import Login from "@/views/Login/Login";
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
-
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+export default new VueRouter({
+  routes:[
+    {
+      path: '/home',
+      name: 'home',
+      component: Home,
+      meta:{
+        showFooter:true
+      }
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: Order,
+      meta:{
+        showFooter:true
+      }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
+      meta:{
+        showFooter:true
+      }
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: Search,
+      meta:{
+        showFooter:true
+      }
+    },
+    {
+      path:'/',
+      redirect:'/home'
+    },
+    {
+      path:'/login',
+      name:'login',
+      component:Login
+    }
+  ]
 })
-
-export default router
