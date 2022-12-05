@@ -18,12 +18,12 @@
       </span>
       <span>订单</span>
     </a>
-    <router-link to="/profile" class="guide_item" :class="{on:'/profile' === $route.path}" >
+    <a  class="guide_item" :class="{on:'/profile' === $route.path}" @click="goTo('/profile')">
       <span class="item_icon">
         <i class="iconfont icon-geren"></i>
       </span>
         <span>我的</span>
-    </router-link>
+    </a>
   </footer>
 </template>
 
@@ -34,7 +34,7 @@ export default {
     msg: String
   },
   methods:{
-    goTo(path){
+    goTo(path){//更换路由地址
       this.$router.replace(path)
     }
   }
@@ -47,7 +47,7 @@ export default {
 .footer_guide  //footer
   top-border-1px(#e4e4e4)
   position fixed
-  z-index 100
+  z-index 1000
   left 0
   right 0
   bottom 0

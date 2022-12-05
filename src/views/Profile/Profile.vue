@@ -2,12 +2,12 @@
   <section class="profile">
     <Header title="我的"></Header>
     <section class="profile-number">
-      <a href="javascript:" class="profile-link" @click="goToLogin('/login')">
+      <a href="javascript:" class="profile-link" @click="goToLogin()">
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top">登录/注册</p>
+          <p class="user-info-top">{{ userInfo.name || '登陆/注册' }}</p>
           <p>
               <span class="user-icon">
                 <i class="iconfont icon-shouji icon-mobile"></i>
@@ -88,21 +88,42 @@
         </div>
       </a>
     </section>
-  </section>
+    <mt-button type="danger" class="login_out_button" @click="logout" v-if="userInfo._id">退出登陆</mt-button>
+    </section>
+
 </template>
 
 <script>
 import Header from "@/components/Header/Header";
+import { MessageBox, Toast } from 'mint-ui';
+import {mapState} from "vuex";
 export default {
   name: "Profile",
   components:{
     Header
   },
   methods:{
-    goToLogin(path){
-      this.$router.replace(path);
-      console.log()
+    goToLogin(){
+      this.$router.push('/login');//路由到登陆
+    },
+    logout(){
+      MessageBox.confirm('确定退出吗?').then(
+        () => {
+          this.$store.dispatch('logout')
+          Toast({
+            message: '您已经退出',
+            position: 'bottom',
+            duration: 2000
+          });
+        },
+        () => {
+          console.log('取消')
+        },
+      );
     }
+  },
+  computed:{
+    ...mapState(['userInfo'])
   }
 }
 </script>
@@ -112,7 +133,7 @@ export default {
 .profile //我的
   width 100%
   .profile-number
-    margin-top 45.5px
+    margin-top 45px
     .profile-link
       clearFix()
       position relative
@@ -150,6 +171,7 @@ export default {
               vertical-align text-top
           .icon-mobile-number
             font-size 14px
+            margin-left 5px
             color #fff
       .arrow
         width 12px
@@ -199,6 +221,11 @@ export default {
         .info_data_top
           span
             color #6ac20b
+  .login_out_button
+    width 94%
+
+    margin 20px auto
+    display block
   .profile_my_order
     top-border-1px(#e4e4e4)
     margin-top 10px
